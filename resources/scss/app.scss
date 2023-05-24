@@ -2,3 +2,10 @@
 .yellow {
     color:#ffd700;
 }
+
+.barred {
+    border-collapse:collapse;
+    th {
+        border-left:1px solid black;
+    }
+}

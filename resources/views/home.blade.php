@@ -34,7 +34,11 @@
                 </thead>
                 <tbody>
                     @foreach ($todayTrains as $train)
-                    <tr class="yellow">
+                    <tr class="@if ($train->canceled)
+                        text-danger
+                    @else
+                        yellow
+                    @endif barred">
                         <th>{{$train->agency}}</th>
                         <th>{{$train->from_station}}</th>
                         <th>{{$train->to_station}}</th>
@@ -42,8 +46,20 @@
                         <th>{{date('H:i', strtotime($train->date_of_arrival))}}</th>
                         <th>{{$train->train_code}}</th>
                         <th>{{$train->train_cars}}</th>
-                        <th>{{$train->on_time}}</th>
-                        <th>{{$train->canceled}}</th>
+                       @if ($train->canceled)
+                       <th class=>---</th>
+                       <th class="text-uppercase">soppresso</th>
+
+
+                       @else
+                       @if ($train->on_time)
+                       <th class="text-success text-uppercase">in orario</th>
+                       <th class="text-uppercase text-success">no</th>
+                       @else
+                       <th class="text-danger text-uppercase">in ritardo</th>
+                       <th class="text-uppercase text-success">no</th>
+                       @endif
+                       @endif
 
                     </tr>
                     @endforeach

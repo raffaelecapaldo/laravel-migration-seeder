@@ -26,6 +26,15 @@ class TrainsTableSeeder extends Seeder
                 'canceled' => 0,
             ],
             [
+                'agency' => 'Italo',
+                'from_station' => 'Roma Termini',
+                'to_station' => 'Ostia',
+                'date_of_departure' => '2023-05-24 14:00:00',
+                'date_of_arrival' => '2023-05-24 16:00:00',
+                'on_time' => 0,
+                'canceled' => 0,
+            ],
+            [
                 'agency' => 'Trenitalia',
                 'from_station' => 'Palermo',
                 'to_station' => 'Milano Centrale',
