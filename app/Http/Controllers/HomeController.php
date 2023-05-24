@@ -16,7 +16,9 @@ class HomeController extends Controller
         Carbon::setLocale('it'); //Per mostrare la data in pagina
         $data = [
             'today' => Carbon::today()->isoFormat('D MMMM YYYY'),
-             'todayTrains' => Train::where('date_of_departure', 'Like', $todayDate.'%')->get()
+             'todayTrains' => Train::where('date_of_departure', 'Like', $todayDate.'%')
+             ->orderBy('date_of_departure')
+             ->get()
         ];
         return view('home', $data);
     }
