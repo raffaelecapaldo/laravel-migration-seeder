@@ -81,6 +81,37 @@ class TrainsTableSeeder extends Seeder
             ],
         ];
 
+        $cities = [
+            'Roma Centrale',
+            'Milano Centrale',
+            'Napoli Centrale',
+            'Ostia',
+            'Palermo',
+            'Parma',
+            'Taranto',
+            'Firenze',
+            'Genova'
+        ];
+
+        $agency = [
+            'Italo',
+            'Trenitalia'
+        ];
+        for ($i = 0; $i < 100; $i++) {
+            $randIndAgency = array_rand($agency);
+            $randIndCitiesA = array_rand($cities);
+            $randIndCitiesB = array_rand($cities);
+            $train['agency'] = $agency[$randIndAgency];
+            $train['from_station'] = $cities[$randIndCitiesA];
+            $train['to_station'] = $cities[$randIndCitiesB];
+            $train['date_of_departure'] = date('Y-m-d H:i:s', mt_rand(strtotime('2023-05-24 09:00:00'), strtotime('2023-05-24 14:00:00')));
+            $train['date_of_arrival'] = date('Y-m-d H:i:s', mt_rand(strtotime('2023-05-24 15:00:00'), strtotime('2023-05-24 24:00:00')));
+            $train['on_time'] = rand(0,1);
+            $train['canceled'] = rand(0,1);
+            $trains[] = $train;
+
+
+        }
 
         foreach ($trains as $train) {
             $train['train_code'] = rand(6000, 9999);
