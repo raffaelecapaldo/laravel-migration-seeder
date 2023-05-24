@@ -18,7 +18,6 @@ class HomeController extends Controller
             'today' => Carbon::today()->isoFormat('D MMMM YYYY'),
              'todayTrains' => Train::where('date_of_departure', 'Like', $todayDate.'%')->get()
         ];
-        dd($data['todayTrains']);
         return view('home', $data);
     }
 }

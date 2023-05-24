@@ -12,10 +12,46 @@
 
 </head>
 
-<body>
+<body class="bg-dark">
 
     <main>
-        <p class="text-center">Scaffolding</p>
+        <div class="container-fluid">
+            <h1 class="yellow text-center">Tabellone ferroviario</h1>
+            <h2 class="yellow text-center">{{$today}}</h2>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                      <th scope="col">Azienda</th>
+                      <th scope="col">S. Partenza</th>
+                      <th scope="col">S. Destinazione</th>
+                      <th scope="col">Orario partenza</th>
+                      <th scope="col">Orario arrivo</th>
+                      <th scope="col">N. Treno</th>
+                      <th scope="col">N. Carrozze</th>
+                      <th scope="col">In orario</th>
+                      <th scope="col">Cancellato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($todayTrains as $train)
+                    <tr class="yellow">
+                        <th>{{$train->agency}}</th>
+                        <th>{{$train->from_station}}</th>
+                        <th>{{$train->to_station}}</th>
+                        <th>{{date('H:i', strtotime($train->date_of_departure))}}</th>
+                        <th>{{date('H:i', strtotime($train->date_of_arrival))}}</th>
+                        <th>{{$train->train_code}}</th>
+                        <th>{{$train->train_cars}}</th>
+                        <th>{{$train->on_time}}</th>
+                        <th>{{$train->canceled}}</th>
+
+                    </tr>
+                    @endforeach
+
+                </tbody>
+              </table>
+        </div>
+
     </main>
 
 </body>
