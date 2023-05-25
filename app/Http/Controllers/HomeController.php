@@ -12,11 +12,11 @@ use App\Models\Train;
 class HomeController extends Controller
 {
     public function index() {
-        $todayDate = Carbon::today();//Per fare il confronto nel db
+        $todayDate = Carbon::now();//Per fare il confronto nel db + ore
         Carbon::setLocale('it'); //Per mostrare la data in pagina
         $data = [
             'today' => Carbon::today()->isoFormat('D MMMM YYYY'),
-             'todayTrains' => Train::where('date_of_departure', '>', $todayDate)
+             'todayTrains' => Train::where('date_of_departure', '>', $todayDate)//Non uguale perché treno partito in questo momento non deve essere mostrato
              ->orderBy('date_of_departure')
              ->get()
         ];

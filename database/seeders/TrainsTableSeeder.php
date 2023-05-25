@@ -15,71 +15,6 @@ class TrainsTableSeeder extends Seeder
      */
     public function run()
     {
-        $trains = [
-            [
-                'agency' => 'Italo',
-                'from_station' => 'Roma Termini',
-                'to_station' => 'Milano Centrale',
-                'date_of_departure' => '2023-05-24 19:00:00',
-                'date_of_arrival' => '2023-05-24 21:00:00',
-                'on_time' => 1,
-                'canceled' => 0,
-            ],
-            [
-                'agency' => 'Italo',
-                'from_station' => 'Roma Termini',
-                'to_station' => 'Ostia',
-                'date_of_departure' => '2023-05-24 14:00:00',
-                'date_of_arrival' => '2023-05-24 16:00:00',
-                'on_time' => 0,
-                'canceled' => 0,
-            ],
-            [
-                'agency' => 'Trenitalia',
-                'from_station' => 'Palermo',
-                'to_station' => 'Milano Centrale',
-                'date_of_departure' => '2023-05-24 17:10:00',
-                'date_of_arrival' => '2023-05-24 19:15:00',
-                'on_time' => 1,
-                'canceled' => 1,
-            ],
-            [
-                'agency' => 'Italo',
-                'from_station' => 'Milano Centrale',
-                'to_station' => 'Roma Termini',
-                'date_of_departure' => '2023-05-24 15:40:00',
-                'date_of_arrival' => '2023-05-24 17:20:00',
-                'on_time' => 1,
-                'canceled' => 1,
-            ],
-            [
-                'agency' => 'Trenitalia',
-                'from_station' => 'Pisa',
-                'to_station' => 'Firenze',
-                'date_of_departure' => '2023-05-24 22:00:00',
-                'date_of_arrival' => '2023-05-24 23:35:00',
-                'on_time' => 1,
-                'canceled' => 0,
-            ],
-            [
-                'agency' => 'Trenitalia',
-                'from_station' => 'Taranto',
-                'to_station' => 'Bari',
-                'date_of_departure' => '2023-05-27 19:00:00',
-                'date_of_arrival' => '2023-05-24 21:12:00',
-                'on_time' => 1,
-                'canceled' => 1,
-            ],
-            [
-                'agency' => 'Italo',
-                'from_station' => 'San Giuliano Terme',
-                'to_station' => 'Lucca',
-                'date_of_departure' => '2023-05-30 07:00:00',
-                'date_of_arrival' => '2023-05-30 07:51:00',
-                'on_time' => 1,
-                'canceled' => 0,
-            ],
-        ];
 
         $cities = [
             'Roma Centrale',
@@ -97,21 +32,28 @@ class TrainsTableSeeder extends Seeder
             'Italo',
             'Trenitalia'
         ];
+
+        $faker = \Faker\Factory::create();//Gestione migliore delle date con Faker
         for ($i = 0; $i < 100; $i++) {
+            $fakedate = $faker->dateTimeBetween('-10 days', '+15 days')->format('Y-m-d H:i:s');
             $randIndAgency = array_rand($agency);
             $randIndCitiesA = array_rand($cities);
             $randIndCitiesB = array_rand($cities);
+            while ($randIndCitiesA === $randIndCitiesB) {//Evita partenza uguale alla destinazione
+                $randIndCitiesB = array_rand($cities);
+            }
             $train['agency'] = $agency[$randIndAgency];
             $train['from_station'] = $cities[$randIndCitiesA];
             $train['to_station'] = $cities[$randIndCitiesB];
-            $train['date_of_departure'] = date('Y-m-d H:i:s', mt_rand(strtotime('2023-05-10 09:00:00'), strtotime('2023-05-31 14:00:00')));
-            $train['date_of_arrival'] = date('Y-m-d H:i:s', mt_rand(strtotime('2023-05-24 15:00:00'), strtotime('2023-05-24 24:00:00')));
+            $train['date_of_departure'] = $fakedate;
+            $train['date_of_arrival'] = $faker->dateTimeInInterval($fakedate,"+2 hours");
             $train['on_time'] = rand(0,1);
             $train['canceled'] = rand(0,1);
             $trains[] = $train;
+            }
 
 
-        }
+
 
         foreach ($trains as $train) {
             $train['train_code'] = rand(6000, 9999);
@@ -128,5 +70,5 @@ class TrainsTableSeeder extends Seeder
             $newTrain->canceled = $train['canceled'];
             $newTrain->save();
         }
-    }
-}
+
+    }}
